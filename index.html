@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+        integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+        crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="jquery-csv.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="static/us-states.js"></script>
+    <script src="static/georef-canada-province.js"></script>
+    <script src="static/nielsen-mkt-map_simplified.js"></script>
+    <script src="static/app.js" defer></script>
+    <title>GeoTarget Builder</title>
+</head>
+<body>
+    <div class="container">
+        <h1>GeoTarget Builder</h1>
+        <div class="info"><h4>Hovering: </h4><h4 id="hovering"></h4></div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="map" id="region"></div>
+                <form>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Search DMAs</span>
+                        </div>
+                        <input oninput="filterDmas()" id="dma-search" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </form>
+                <div class="map" id="dma"></div>
+            </div>
+            <div class="col-md-4">
+                <form>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Placement Name</span>
+                        </div>
+                        <input onchange="placementUpdate()" id="placement-name" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </form>
+                <table id="geos" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <th>Level</th>
+                        <th>Geo</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button class="button" onclick="addRow()">Add to Report</button>
+                <button class="button" onclick="clearTable()">Clear Selected Geos</button>
+                <br>
+                <div class="warnings">
+                    <div id="warning-placement" class="warning"></div>
+                    <div id="warning-geo" class="warning"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h1>Report</h1>
+            <table id="report" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <th>Placement Name</th>
+                    <th>Geographies</th>
+                </thead>
+                <tbody id="write-rows"></tbody>
+            </table>
+            <div><button class="button" onclick="exportCsv()">Export Report</button></div>
+        </div>
+    </div>
+</body>
+</html>
